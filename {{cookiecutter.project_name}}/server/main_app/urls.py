@@ -1,9 +1,9 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from server.main_app.views import index
 
 # Place your URLs here:
 
 urlpatterns = [
-    url(r'^hello/$', index, name='hello'),
+    re_path(r'^hello/$', index, name='hello'),
 ]

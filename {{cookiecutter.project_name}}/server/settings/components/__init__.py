@@ -1,13 +1,13 @@
 from pathlib import PurePath
 
-from decouple import AutoConfig
+from environs import Env
 
+SETTINGS_FOLDER = PurePath(__file__).parents[1]
+SOURCE_FOLDER = SETTINGS_FOLDER.parent
+PROJECT_ROOT = SOURCE_FOLDER.parent
 
-# Build paths inside the project like this: BASE_DIR.joinpath('some')
-# `pathlib` is better than writing:
-# BASE_DIR = dirname(dirname(dirname(dirname(__file__))))
-BASE_DIR = PurePath(__file__).parent.parent.parent.parent
-
-# Loading `.env` files
-# See docs: https://gitlab.com/mkleehammer/autoconfig
-config = AutoConfig(search_path=BASE_DIR.joinpath('config'))
+env = Env()
+try:
+    env.read_env(PROJECT_ROOT / 'config')
+except FileNotFoundError:
+    pass

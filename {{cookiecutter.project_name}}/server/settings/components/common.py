@@ -10,12 +10,36 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 from typing import Tuple
 
-from server.settings.components import BASE_DIR, config
+from server.settings.components import env, PROJECT_ROOT
+
+__all__ = (
+    'AUTH_PASSWORD_VALIDATORS',
+    'AUTHENTICATION_BACKENDS',
+    'DATABASES',
+    'INSTALLED_APPS',
+    'LANGUAGE_CODE',
+    'LANGUAGES',
+    'LOCALE_PATHS',
+    'MEDIA_ROOT',
+    'MEDIA_URL',
+    'MIDDLEWARE',
+    'PASSWORD_HASHERS',
+    'ROOT_URLCONF',
+    'SECRET_KEY',
+    'STATIC_URL',
+    'STATICFILES_FINDERS',
+    'TEMPLATES',
+    'TIME_ZONE',
+    'USE_I18N',
+    'USE_L10N',
+    'USE_TZ',
+    'WSGI_APPLICATION',
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-SECRET_KEY = config('DJANGO_SECRET_KEY')
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
 # Application definition:
 
@@ -68,17 +92,34 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
         # Database name or filepath if using 'sqlite3':
-        'NAME': config('POSTGRES_DB'),
+        'NAME': env.str('POSTGRES_DB'),
 
         # You don't need these settings if using 'sqlite3':
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('DJANGO_DATABASE_HOST'),
-        'PORT': config('DJANGO_DATABASE_PORT', cast=int),
-        'CONN_MAX_AGE': config('CONN_MAX_AGE', cast=int, default=60),
+        'USER': env.str('POSTGRES_USER'),
+        'PASSWORD': env.str('POSTGRES_PASSWORD'),
+        'HOST': env.str('DJANGO_DATABASE_HOST'),
+        'PORT': env.int('DJANGO_DATABASE_PORT'),
+        'CONN_MAX_AGE': env.int('CONN_MAX_AGE', 60),
     },
 }
 
+# Password validation
+# https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa
+    },
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -120,7 +161,7 @@ TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'DIRS': [
         # Contains plain text templates, like `robots.txt`:
-        BASE_DIR.joinpath('server', 'templates'),
+        PROJECT_ROOT / 'server' / 'templates',
     ],
     'OPTIONS': {
         'context_processors': [
@@ -141,7 +182,7 @@ TEMPLATES = [{
 # (see development.py and production.py).
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR.joinpath('media')
+MEDIA_ROOT = PROJECT_ROOT / 'media'
 
 
 # Django default authentication system.
