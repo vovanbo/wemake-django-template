@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 # Logging
 # https://docs.djangoproject.com/en/1.11/topics/logging/

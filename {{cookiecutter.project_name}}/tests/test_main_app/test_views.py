@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 def test_main_page(client, main_heading):
     """This test ensures that main page works."""
     response = client.get('/')

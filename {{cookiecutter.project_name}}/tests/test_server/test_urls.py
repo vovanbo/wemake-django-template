@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 def test_admin_unauthorized(client):
     """This test ensures that admin panel requires auth."""
     response = client.get('/admin/')
